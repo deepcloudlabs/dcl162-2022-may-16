@@ -1,11 +1,11 @@
-from banking import Account, InsufficientBalanceError
+from banking import Account, InsufficientBalanceError, CheckingAccount
 
 try:
-    acc1 = Account("tr1", 100000)
+    acc1 = CheckingAccount("tr1", 100000, 1000)
     acc1.deposit(4500)
-    acc1.withdraw(10000)
-    print(acc1.balance)
-    acc1.withdraw(200000)
+    acc1.withdraw(105500)
+    print(acc1)
+    acc1.withdraw(1)
 except ValueError as err:
     print(err)
 except InsufficientBalanceError as err:
