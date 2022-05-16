@@ -67,3 +67,34 @@ class CheckingAccount(Account):
     # overriding
     def __str__(self):
         return f"CheckingAccount [iban: {self._iban}, balance: {self._balance}, overdraft_amount: {self._overdraft_amount}]"
+
+
+class Customer:
+    def __init__(self, identity, full_name, accounts=[]):
+        self._identity = identity
+        self._full_name = full_name
+        self._accounts = accounts
+
+    @property
+    def identity(self):
+        return self._identity
+
+    @property
+    def full_name(self):
+        return self._full_name
+
+    @property
+    def balance(self):
+        total_balance = 0
+        for acc in self._accounts:
+            total_balance = total_balance + acc.balance
+        return total_balance
+
+    def add_account(self, acc):
+        self._accounts.append(acc)
+
+    def get_account_by_iban(self, iban):
+        for acc in self._accounts:
+            if acc.iban == iban:
+                return acc
+        return None
