@@ -35,3 +35,5 @@ class Time:
             raise ValueError(f"Second ({second}) must be between 0-60")
         self._second = second
 
+    def __str__(self):
+        return f"{self._hour}h:{self._minute}m:{self._second}s"
