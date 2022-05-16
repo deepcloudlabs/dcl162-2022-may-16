@@ -18,6 +18,7 @@ class Account:
         return self._balance
 
     def withdraw(self, amount):
+        print("Account::withdraw")
         # validation
         if amount <= 0:
             raise ValueError("withdraw amount must be positive.")
@@ -53,6 +54,7 @@ class CheckingAccount(Account):
 
     # overriding
     def withdraw(self, amount):
+        print("CheckingAccount::withdraw")
         # validation
         if amount <= 0:
             raise ValueError("withdraw amount must be positive.")
@@ -61,3 +63,7 @@ class CheckingAccount(Account):
             deficit = amount - self._balance - self._overdraft_amount
             raise InsufficientBalanceError("your balance does not cover your expenses", deficit)
         self._balance = self._balance - amount
+
+    # overriding
+    def __str__(self):
+        return f"CheckingAccount [iban: {self._iban}, balance: {self._balance}, overdraft_amount: {self._overdraft_amount}]"
