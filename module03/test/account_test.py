@@ -13,21 +13,17 @@ def test_creating_an_account_successfully(an_account):
     assert an_account.balance == 10_000
 
 
-def test_withdraw_with_negative_amount_should_fail(an_account):
+@pytest.mark.parametrize("amount", [(-1), (-0.1), (0.0)])
+def test_withdraw_with_negative_amount_should_fail(an_account, amount):
     with pytest.raises(ValueError):
-        an_account.withdraw(-1)
+        an_account.withdraw(amount)
     assert an_account.balance == 10_000
 
 
-def test_withdraw_with_zero_amount_should_fail(an_account):
-    with pytest.raises(ValueError):
-        an_account.withdraw(0)
-    assert an_account.balance == 10_000
-
-
-def test_withdraw_above_balance_should_fail(an_account):
+@pytest.mark.parametrize("amount", [(10001), (10001.01), (10001.1)])
+def test_withdraw_above_balance_should_fail(an_account, amount):
     with pytest.raises(InsufficientBalanceError):
-        an_account.withdraw(10001)
+        an_account.withdraw(amount)
     assert an_account.balance == 10_000
 
 

@@ -21,7 +21,6 @@ class Account:
         return self._balance
 
     def withdraw(self, amount):
-        print("Account::withdraw")
         # validation
         if amount <= 0:
             raise ValueError("withdraw amount must be positive.")
@@ -57,7 +56,6 @@ class CheckingAccount(Account):
 
     # overriding
     def withdraw(self, amount):
-        print("CheckingAccount::withdraw")
         # validation
         if amount <= 0:
             raise ValueError("withdraw amount must be positive.")
@@ -69,14 +67,15 @@ class CheckingAccount(Account):
 
     # overriding
     def __str__(self):
-        return f"CheckingAccount [iban: {self._iban}, balance: {self._balance}, overdraft_amount: {self._overdraft_amount}]"
+        return f"CheckingAccount [iban: {self._iban}, balance: {self._balance}, " \
+               f"overdraft_amount: {self._overdraft_amount}]"
 
 
 class Customer:
-    def __init__(self, identity, full_name, accounts=[]):
+    def __init__(self, identity, full_name):
         self._identity = identity
         self._full_name = full_name
-        self._accounts = accounts
+        self._accounts = []
 
     @property
     def identity(self):
