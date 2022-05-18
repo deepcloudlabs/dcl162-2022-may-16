@@ -32,6 +32,7 @@ def get_employee_by_identity(identity):
 def add_employee():
     emp = extract_emp_from_req(request, fields)
     emp_collection.insert_one(emp)
+    socketio.emit('hire', emp)
     return jsonify({"status": "ok"})
 
 
@@ -49,6 +50,7 @@ def update_employee(identity):
 def remove_employee(identity):
     removed_emp = emp_collection.find_one({"_id": identity})
     emp_collection.delete_one({"_id": identity})
+    socketio.emit('fire', removed_emp)
     return jsonify(removed_emp)
 
 
