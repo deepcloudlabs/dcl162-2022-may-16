@@ -35,4 +35,21 @@ def add_employee():
     return jsonify({"status": "ok"})
 
 
+@app.route("/hr/api/v1/employees/<identity>", methods=["PUT", "PATCH"])
+def update_employee(identity):
+    emp = extract_emp_from_req(request, fields)
+    updated_emp = emp_collection.find_one_and_update(
+        {"_id": identity},
+        {"$set": emp},
+        upsert=False)
+    return jsonify(updated_emp)
+
+
+@app.route("/hr/api/v1/employees/<identity>", methods=["DELETE"])
+def remove_employee(identity):
+    removed_emp = emp_collection.find_one({"_id": identity})
+    emp_collection.delete_one({"_id": identity})
+    return jsonify(removed_emp)
+
+
 socketio.run(app, port=7001)
